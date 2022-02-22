@@ -231,3 +231,41 @@ foam.CLASS({
     }
   ]
 });
+
+
+foam.CLASS({
+  package: 'foam.u2',
+  name: 'ToggleActionView',
+  extends: 'foam.u2.ActionView',
+  documentation: '',
+  css: `
+    ^active {
+      background: red !important;
+    }
+  `,
+  properties: [
+    {
+      class: 'Boolean',
+      name: 'actionState'
+    },
+    {
+      name: 'label'
+    },
+    {
+      name: 'buttonStyle',
+      factory: function() { return 'TERTIARY' } 
+    }
+  ],
+  methods: [
+    function initCls() {
+      this.SUPER();
+      this.enableClass(this.myClass('active'), this.actionState$)
+    }
+  ],
+  listeners: [
+    function click() {
+      this.SUPER();
+      this.actionState = ! this.actionState;
+    }
+  ]
+});

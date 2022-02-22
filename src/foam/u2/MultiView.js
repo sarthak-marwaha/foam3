@@ -52,7 +52,7 @@ foam.CLASS({
           return this.
             start().
               addClass(self.myClass('container')).
-              callIf(self.horizontal, function() { this.style({float: 'left'}); }).
+              // callIf(self.horizontal, function() { this.style({float: 'left'}); }).
               start(v, { data$: self.data$ }).
                 call(function() {
                   self.prop && this.fromProperty && this.fromProperty(self.prop);

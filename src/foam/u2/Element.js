@@ -1170,8 +1170,8 @@ foam.CLASS({
         // and keypress events.
         target.tabIndex = target.tabIndex || 1;
 
-        target.on('keydown',  this.onKeyboardShortcut);
-        target.on('keypress', this.onKeyboardShortcut);
+        this.on('keydown',  this.onKeyboardShortcut);
+        this.on('keypress', this.onKeyboardShortcut);
       }
     },
 
