@@ -136,22 +136,6 @@ foam.CLASS({
       writePermissionRequired: true
     },
     {
-      class: 'Image',
-      name: 'loginImage',
-      displayWidth: 60,
-      view: {
-        class: 'foam.u2.MultiView',
-        views: [
-          {
-            class: 'foam.u2.tag.TextArea',
-            rows: 4, cols: 80
-          },
-          { class: 'foam.u2.view.ImageView' },
-        ]
-      },
-      writePermissionRequired: true
-    },
-    {
       class: 'Array',
       name: 'domains',
       of: 'String',
@@ -240,6 +224,9 @@ foam.CLASS({
       class: 'Image',
       name: 'largeLogo',
       documentation: 'A large logo to display in the application.',
+      factory: function() {
+        return this.logo;
+      },
       displayWidth: 60,
       view: {
         class: 'foam.u2.MultiView',
@@ -259,6 +246,63 @@ foam.CLASS({
       name: 'largeRasterLogo',
       documentation: 'A large raster logo to display in the application. Use when svg is not supported.',
       displayWidth: 60,
+      view: {
+        class: 'foam.u2.MultiView',
+        views: [
+          {
+            class: 'foam.u2.tag.TextArea',
+            rows: 4, cols: 80
+          },
+          { class: 'foam.u2.view.ImageView' },
+        ]
+      },
+      section: 'images',
+      writePermissionRequired: true
+    },
+    {
+      class: 'Image',
+      name: 'loginImage',
+      displayWidth: 60,
+      view: {
+        class: 'foam.u2.MultiView',
+        views: [
+          {
+            class: 'foam.u2.tag.TextArea',
+            rows: 4, cols: 80
+          },
+          { class: 'foam.u2.view.ImageView' },
+        ]
+      },
+      section: 'images',
+      writePermissionRequired: true
+    },
+    {
+      class: 'Image',
+      name: 'externalCommunicationImage',
+      factory: function() {
+        return this.largeLogoEnabled ? this.largeLogo : this.logo;
+      },
+      displayWidth: 60,
+      view: {
+        class: 'foam.u2.MultiView',
+        views: [
+          {
+            class: 'foam.u2.tag.TextArea',
+            rows: 4, cols: 80
+          },
+          { class: 'foam.u2.view.ImageView' },
+        ]
+      },
+      section: 'images',
+      writePermissionRequired: true
+    },
+    {
+      class: 'Image',
+      name: 'topNavLogo',
+      displayWidth: 60,
+      factory: function() {
+        return this.largeLogoEnabled ? this.largeLogo : this.logo;
+      },
       view: {
         class: 'foam.u2.MultiView',
         views: [

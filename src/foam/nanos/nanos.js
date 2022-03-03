@@ -674,6 +674,13 @@ FOAM_FILES([
 
   { name: "foam/nanos/auth/GroupPermissionJunctionRefinement", flags: ["java"] },
 
-  { name: "foam/nanos/om/OMRuleAction", flags: [ "java" ] }
+  { name: "foam/nanos/om/OMRuleAction", flags: [ "java" ] },
 
+  { name: "foam/nanos/theme/customisation/ThemeFacade", flags: ['web'] },
+  { name: "foam/nanos/theme/customisation/ThemeCustomisation", flags: ['web'] },
+  { name: "foam/nanos/theme/customisation/ThemeImageUploadView", flags: ['web'] },
+  { name: "foam/nanos/notification/broadcast/BroadcastNotification", flags: ['java'] },
+  { name: "foam/nanos/notification/broadcast/SendNotificationView", flags: ['web'] },
+  { name: "foam/nanos/notification/broadcast/BroadcastNotificationFacade", flags: ['web'] },
+  { name: "foam/nanos/notification/broadcast/BroadcastNotificationNotificationCitationView", flags: ['web'] },
 ]);
