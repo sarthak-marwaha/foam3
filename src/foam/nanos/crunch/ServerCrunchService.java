@@ -263,35 +263,30 @@ public class ServerCrunchService
     return cache;
   }
 
-  // returns a getPrereqs result directly from prerequisitecapabilityjunctiondao
-  public List<String> getPrereqs_(X x, String capId) {
-    return ((ArraySink) ((foam.mlang.sink.Map) ((DAO) x.get("prerequisiteCapabilityJunctionDAO"))
-      .inX(x)
-      .where(EQ(CapabilityCapabilityJunction.SOURCE_ID, capId))
-      .orderBy(CapabilityCapabilityJunction.PRIORITY)
-      .select(MAP(CapabilityCapabilityJunction.TARGET_ID, new ArraySink()))).getDelegate())
-      .getArray();
-  }
+  public SessionCrunchCache getSessionCache(X x) {
+    var session = (Session) x.get(Session.class);
+    User user = ((Subject) x.get("subject")).getUser();
+    if ( user == null || session == null ) return anonymousCache_;
 
-  // when an entry of ccj is added, updated, or removed from pcjdao, update corresponding entry in the cache
-  public void updateEntry(X x, CapabilityCapabilityJunction ccj) {
-    Session session = x.get(Session.class);
-    if ( session == null ) return;
-    // use the context of the session user/agent to recalculate the prereqs list for corresponding
-    // entry in map
-    DAO userDAO = (DAO) x.get("localUserDAO");
-    User sessionUser = (User) userDAO.find(session.getUserId());
-    User sessionAgent = session.getAgentId() > 0 ? (User) userDAO.find(session.getAgentId()) : null;
+    Long userId = user.getId();
+    Long agentId = ((Subject) x.get("subject")).getRealUser().getId();
 
-    Subject subject = sessionAgent == null ? new Subject(sessionUser) : new Subject(sessionAgent);
-    if ( sessionAgent != null ) subject.setUser(sessionUser);
+    boolean cacheValid = session.getAgentId() > 0 ?
+      session.getAgentId() == agentId && session.getUserId() == userId :
+      session.getUserId() == agentId && session.getUserId() == userId;
 
-    Map<String, List<String>> cache = (Map) session.getContext().get(CACHE_KEY);
-    cache.put(ccj.getSourceId(), getPrereqs_(x.put("subject", subject), ccj.getSourceId()));
+    if ( ! cacheValid ) return anonymousCache_;
 
-    if ( session != null && session.getApplyContext() != null ) {
+    var cache = (SessionCrunchCache) session.getContext().get(CACHE_KEY);
+    if ( cache == null && session.getApplyContext() != null ) {
+      cache = new SessionCrunchCache();
       session.setApplyContext(session.getApplyContext().put(CACHE_KEY, cache));
+    } else if ( cache == null ) {
+      // Unsaved cache means no caching!
+      cache = new SessionCrunchCache();
     }
+
+    return cache;
   }
 
   // sets the prerequisite cache to null, is used when session info changes
