@@ -857,6 +857,7 @@ foam.CLASS({
     },
 
     function addMacroLayout() {
+      window.scrollTo(0,1)
       this
         .addClass(this.myClass())
         .tag(this.NavigationController, {
