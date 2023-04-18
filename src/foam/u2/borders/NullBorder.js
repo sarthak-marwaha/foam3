@@ -22,8 +22,35 @@ foam.CLASS({
   ],
 
   methods: [
+    function init() {
+      this.startContext({ controllerMode: foam.u2.ControllerMode.VIEW })
+      .addClass(...this.cssClasses)
+      .tag('', {}, this.content$)
+      .endContext();
+    }
+  ]
+});
+
+foam.CLASS({
+  package: 'foam.u2.borders',
+  name: 'BorderTest',
+  extends: 'foam.u2.View',
+  documentation: '',
+  css: ``,
+  properties: [
+    {
+      class: 'String',
+      name: 'test'
+    }
+  ],
+  methods: [
     function render() {
-      this.addClass(...this.cssClasses).tag('', {}, this.contents$);
+      this.start(foam.u2.borders.NullBorder)
+      .startContext({ data: this })
+        .tag(this.TEST.__)
+        .add(this.TEST.__)
+        .endContext()
+      .end();
     }
   ]
 });

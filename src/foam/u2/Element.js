@@ -530,6 +530,8 @@ foam.CLASS({
     'translationService?'
   ],
 
+  exports: ['controllerMode'],
+
   implements: [
     'foam.mlang.Expressions',
   ],
