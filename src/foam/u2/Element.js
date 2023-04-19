@@ -1444,8 +1444,9 @@ foam.CLASS({
     function startContext(map) {
       var m = {};
       Object.assign(m, map);
-      m.__oldAddContext__ = this.__subSubContext__;
-      this.__subSubContext__ = this.__subSubContext__.createSubContext(m);
+      let self = this.content ?? this; 
+      m.__oldAddContext__ = self.__subSubContext__;
+      self.__subSubContext__ = self.__subSubContext__.createSubContext(m);
       return this;
     },
 
@@ -1455,7 +1456,8 @@ foam.CLASS({
     },
 
     function createChild_(spec, args) {
-      return foam.u2.ViewSpec.createView(spec, args, this, this.__subSubContext__);
+      let self = this.content ?? this; 
+      return foam.u2.ViewSpec.createView(spec, args, self, self.__subSubContext__);
     },
 
     function start(spec, args, slot) {
