@@ -135,3 +135,79 @@ foam.CLASS({
     */
   ]
 });
+
+// foam.CLASS({
+//   package: 'foam.u2',
+//   name: 'ViewSpecDebugger',
+//   refines: 'foam.u2.ViewSpec',
+//   flags: ['dev'],
+
+//   documentation: `
+//     // Add
+//   `,
+
+//   // imports: ['classloader'],
+
+//   axioms: [
+//     {
+//       installInClass: function(cls) {
+//         debugger;
+//         cls.private_.oldCreate = cls.createView;
+//         cls.private_.reloadClasses = {};
+
+//         cls.createView = function(spec, args, self, ctx, disableWarning) {
+//           let ret = oldCreate.call(this, spec, args, self, ctx, disableWarning);
+//           // if ( ret.debugView ) {
+//           //   let pushTo = cls.private_.reloadClasses[ret.cls_.id] || ( cls.private_.reloadClasses[ret.cls_.id] = [] );
+//           //   pushTo.push({args: [spec, args, self, ctx, disableWarning], el: ret});
+//           // }
+//           return ret;
+//         }
+//       }
+//     }
+//   ],
+
+//   actions: [
+//     function reload() {
+//       Object.keys(this.cls_.private_.reloadClasses).forEach(v => {
+//         delete foam.__context__.__cache__[this.view.class];
+//         delete this.classloader.latched[this.view.class];
+//         delete this.classloader.pending[this.view.class];
+//         // TODO: remove old stylesheet
+  
+//         this.classloader.load(this.view.class).then((cls)=>{
+  
+//           foam.__context__.__cache__[this.view.class] = cls;
+//           if ( foam.json.Compact.stringify(cls.model_.instance_) != foam.json.Compact.stringify(this.lastModel && this.lastModel.instance_) ) {
+//             console.log('reload');
+//             this.reloadClass();
+//           } else {
+//            console.log('no reload');
+//           }
+//         });
+//       })
+//       this.delayedReload();
+//     }
+//   ],
+
+//   listeners: [
+//     {
+//       name: 'delayedReload',
+//       isMerged: true,
+//       mergeDelay: 200,
+//       code: function() { this.reload(); }
+//     },
+//     {
+//       name: 'reloadClass',
+//       code: function(specs, el) {
+//         let ret = cls.private_.oldCreate([...specs])
+//         if ( foam.flags.u3 ) {
+//           // Just do dynamic
+//         } else {
+          
+//         }
+//       }
+//     }
+//   ]
+// });
+
